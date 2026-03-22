@@ -1,12 +1,12 @@
 # animBack
-**Animated desktop wallpapers and live screensaver rendering for Haiku.**
+**Animated desktop wallpapers and live screensaver rendering wallpapers for Haiku.**
 
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Haiku-3399ff?style=for-the-badge)](https://www.haiku-os.org/)
 
 ---
 
-Turns a folder of numbered images — or any installed screensaver add-on — into a live, looping desktop background. Uses Tracker's native background attribute API to push frames directly to the desktop with minimal flicker.
+Turns a folder of numbered images or any screensaver add-on into a lively desktop background.
 
 ## Features
 
