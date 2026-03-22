@@ -14,6 +14,7 @@
 
 #include "AnimBackWindow.h"
 #include "FrameLoader.h"
+#include "ScreensaverRenderer.h"
 #include "WallpaperHelper.h"
 #include <Application.h>
 #include <algorithm>
@@ -30,10 +31,11 @@ public:
 
 static void PrintUsage(const char* prog) {
     printf("Usage: %s [options]\n\n", prog);
-    printf("  (no args)                 open the GUI\n");
-    printf("  --animate <folder> [fps]  run animation headlessly\n");
-    printf("  --clear                   clear the desktop background\n");
-    printf("  --help                    this message\n");
+    printf("  (no args)                       open the GUI\n");
+    printf("  --animate <folder> [fps]        run image animation headlessly\n");
+    printf("  --screensaver <addon> [fps]     run a screensaver add-on headlessly\n");
+    printf("  --clear                         clear the desktop background\n");
+    printf("  --help                          this message\n");
 }
 
 static void RunCli(const char* folder, int fps) {
@@ -61,6 +63,24 @@ static void RunCli(const char* folder, int fps) {
     }
 }
 
+static void RunScreensaverCli(const char* addonPath, int fps) {
+    ScreensaverRenderer renderer;
+    if (renderer.Load(addonPath) != B_OK) {
+        fprintf(stderr, "Failed to load screensaver add-on '%s'\n", addonPath);
+        return;
+    }
+
+    static const char* kTmp = "/tmp/animback_saver.png";
+    bigtime_t delay = 1000000 / fps;
+    printf("Screensaver '%s' at %d FPS, Ctrl+C to stop\n", addonPath, fps);
+
+    for (;;) {
+        if (renderer.Tick(kTmp) != B_OK)
+            fprintf(stderr, "Tick failed\n");
+        snooze(delay);
+    }
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         AnimBackApp().Run();
@@ -83,6 +103,15 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    if (!strcmp(arg, "--screensaver")) {
+        if (argc < 3) { fprintf(stderr, "add-on path required\n"); return 1; }
+        int fps = 10;
+        if (argc >= 4) fps = std::max(1, std::min(30, atoi(argv[3])));
+        new BApplication("application/x-vnd.cell-animBack");
+        RunScreensaverCli(argv[2], fps);
+        return 0;
+    }
+
     if (!strcmp(arg, "--clear")) {
         new BApplication("application/x-vnd.cell-animBack");
         Wallpaper::Clear();
@@ -90,6 +119,6 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    fprintf(stderr, "Unknown option '%s' — try --help\n", arg);
+    fprintf(stderr, "Unknown option '%s', try --help\n", arg);
     return 1;
 }
