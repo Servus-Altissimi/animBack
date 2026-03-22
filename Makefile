@@ -2,11 +2,11 @@ CXX      := g++
 CXXFLAGS := -O2 -Wall -std=c++17
 LIBS     := -lbe -ltracker -ltranslation -lscreensaver
 
-SRCS := main.cpp \
-        WallpaperHelper.cpp \
-        FrameLoader.cpp \
-        ScreensaverRenderer.cpp \
-        AnimBackWindow.cpp
+SRCS := src/main.cpp \
+        src/WallpaperHelper.cpp \
+        src/FrameLoader.cpp \
+        src/ScreensaverRenderer.cpp \
+        src/AnimBackWindow.cpp
 
 PKG_NAME    := animback
 PKG_VERSION := 1.0-1
