@@ -1,0 +1,21 @@
+name            animback
+version         1.0-1
+architecture    x86_64
+
+summary         "Animated desktop wallpapers for Haiku"
+description     "Set a folder of numbered images or a screensaver as an animated desktop wallpaper. GUI and CLI mode."
+
+packager        "Servus Altissimi"
+vendor          "Servus Altissimi"
+
+licenses        "MIT"
+copyrights      "2026 Servus Altissimi"
+
+provides {
+    animback = 1.0
+    app:animBack = 1.0
+}
+
+requires {
+    haiku
+}
