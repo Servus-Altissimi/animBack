@@ -53,7 +53,7 @@ Run from the terminal:
 
 ```sh
 animback --animate /path/to/frames [fps]
-animBack --screensaver "/boot/system/add-ons/Screen Savers/screensaver" [fps]
+animback --screensaver "/boot/system/add-ons/Screen Savers/screensaver" [fps]
 ```
 
 Clear the desktop background:
